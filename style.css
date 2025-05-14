@@ -1,0 +1,65 @@
+.container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.wrapper {
+  padding: 2rem;
+  border-radius: 24px;
+  margin: 2rem 0;
+}
+
+.form-wrapper {
+  background-color: #91fdc1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.form-wrapper > div {
+  width: 80%;
+  margin: auto;
+}
+
+.form-wrapper > div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  background-color: #3b09f1;
+  color: #fff;
+  padding: 0.15rem 1rem;
+  border-radius: 12px;
+  box-shadow: none;
+  border: none;
+  font-size: 1.15rem;
+  border: 1x solid #3b09f1;
+  cursor: pointer;
+  transition: opacity 0.4s linear;
+}
+
+button:hover {
+  opacity: 0.5;
+}
+
+#addTaskBtn {
+  background-color: #810277;
+}
+
+.list-wrapper {
+  background-color: #f6f6f6;
+}
+
+#taskInput {
+  flex: 1;
+  border-radius: 12px;
+  padding: 0.15rem 1rem;
+}

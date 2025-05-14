@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+
+<head>
+  <title>To do list</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css"
+    integrity="sha512-q6WgHqiHlKyOqslT/lgBgodhd03Wp4BEqKeW6nNtlOY4quzyG3VoQKFrieaCeSnuVseNKRGpGeDU3qPmabCANg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="main.js" defer></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-wrapper wrapper">
+      <div>
+        <input id="taskInput" placeholder="Nuovo task">
+        <button id="addTaskBtn">Aggiungi</button>
+      </div>
+
+      <div class="filter">
+        <button id="showAll">Tutti</button>
+        <button id="showDone">Completati</button>
+        <button id="showTodo">Da fare</button>
+      </div>
+    </div>
+    <div class="list-wrapper wrapper">
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
