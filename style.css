@@ -63,3 +63,22 @@ button:hover {
   border-radius: 12px;
   padding: 0.15rem 1rem;
 }
+
+li {
+  margin: 1rem 0;
+  display: flex;
+  gap: 1.3rem;
+  padding: 1rem 0;
+}
+
+li:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+
+li > span {
+  display: inline-block;
+}
+
+li > span:last-child {
+  margin-left: auto;
+}
