@@ -39,6 +39,10 @@ const showTodoBtn = document.getElementById('showTodo')
 const sortAsc = document.getElementById('sortAsc')
 const sortDesc = document.getElementById('sortDesc')
 
+const loginWrapper = document.getElementById('loginWrapper')
+const loginForm = loginWrapper.querySelector('form')
+const toDoList = document.getElementById('toDoList')
+
 function renderList(tasksArray) {
   const taskList = document.getElementById('taskList')
   taskList.innerHTML = ''
@@ -155,6 +159,53 @@ async function getRemoteTasks() {
   }
 }
 
+function validateForm(form) {
+  let validatedInputs = {}
+  const inputWrappers = form.querySelectorAll('.input-wrapper')
+
+  inputWrappers.forEach((inputWrapper) => {
+    const errorHandler = inputWrapper.querySelector('.error-handler')
+    errorHandler.innerHTML = ''
+    const input = inputWrapper.querySelector('input')
+    if (!input.value.trim()) {
+      errorHandler.innerHTML = 'Devi compilare il campo ' + input.name
+      return
+    }
+    validatedInputs[input.name] = input.value
+  })
+
+  if (Object.keys(validatedInputs).length === inputWrappers.length) {
+    return validatedInputs
+  }
+}
+
+async function submitLoginForm(inputs) {
+  try {
+    const response = await fetch('https://dummyjson.com/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...inputs,
+        expiresInMins: 30,
+      }),
+    })
+    if (!response.ok) {
+      throw new Error('Something went wrong, please try later')
+    }
+
+    const data = await response.json()
+    loginWrapper.style.display = 'none'
+    toDoList.style.display = 'block'
+    toDoList.style.visibility = 'visible'
+
+    const div = document.createElement('div')
+    div.innerText = 'Ciao ' + data.firstName
+    toDoList.appendChild(div)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => getRemoteTasks())
 
 addBtn.addEventListener('click', () => addTask(input.value))
@@ -162,3 +213,12 @@ addBtn.addEventListener('click', () => addTask(input.value))
 showDoneBtn.addEventListener('click', filterByDone)
 showTodoBtn.addEventListener('click', filterByNotDone)
 showAllBtn.addEventListener('click', () => renderList(tasks))
+
+loginForm.addEventListener('submit', function (event) {
+  event.preventDefault()
+  const formReady = validateForm(event.target)
+
+  if (formReady) {
+    submitLoginForm(formReady)
+  }
+})

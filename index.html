@@ -12,8 +12,23 @@
 </head>
 
 <body>
-  <div class="container">
-  <div id="loading"><span class="loader"></span></div>
+  <div id="loginWrapper">
+    <form id="mioid" novalidate>
+      <div class="input-wrapper">
+        <label for="username">Username</label>
+        <input type="text" name="username" value="" placeholder="username" required>
+        <span class="error-handler"></span>
+      </div>
+      <div class="input-wrapper">
+        <label for="password">Password</label>
+        <input type="password" name="password" value="" placeholder="password" required>
+        <span class="error-handler"></span>
+      </div>
+      <input  type="submit" value="Accedi">
+    </form>
+  </div>
+  <div id="toDoList" class="container">
+    <div id="loading"><span class="loader"></span></div>
     <div class="form-wrapper wrapper">
       <div>
         <input id="taskInput" placeholder="Nuovo task">
