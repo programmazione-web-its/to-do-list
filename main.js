@@ -1,4 +1,4 @@
-const tasks = [
+let tasks = [
   {
     id: Date.now(),
     text: 'Task 1',
@@ -36,6 +36,8 @@ const input = document.getElementById('taskInput')
 const showAllBtn = document.getElementById('showAll')
 const showDoneBtn = document.getElementById('showDone')
 const showTodoBtn = document.getElementById('showTodo')
+const sortAsc = document.getElementById('sortAsc')
+const sortDesc = document.getElementById('sortDesc')
 
 function renderList(tasksArray) {
   const taskList = document.getElementById('taskList')
@@ -83,6 +85,14 @@ function renderList(tasksArray) {
 }
 
 function addTask(text) {
+  if (text.length < 4) {
+    alert('Devi inserire una task')
+    return
+  }
+  // if (!text.trim()) {
+  //   alert('Devi inserire una task')
+  //   return
+  // }
   const item = {
     id: Date.now(),
     text: text,
@@ -113,7 +123,39 @@ function filterByNotDone() {
   renderList(notDoneTasks)
 }
 
-document.addEventListener('DOMContentLoaded', () => renderList(tasks))
+function sortAscFunc() {
+  const sortedTasks = tasks.sort((a, b) => {
+    a.text.localeCompare(b.text) - b.text.localeCompare(a.text)
+  })
+  console.log(sortedTasks)
+}
+
+async function getRemoteTasks() {
+  try {
+    const reponse = await fetch('https://dummyjson.com/todos')
+    if (!reponse.ok) {
+      throw new Error('Something went wrong!')
+    }
+
+    const data = await reponse.json()
+
+    const remoteTodos = data.todos // Accedi ai todos nel mio oggetto
+    const todos = remoteTodos.map((todo) => ({
+      // mappa l'array todo per restiuitre un array con gli oggetti formattati come servono a noi
+      ...todo,
+      text: todo.todo,
+      id: Date.now(),
+    }))
+
+    tasks = [...tasks, ...todos]
+    document.getElementById('loading').style.display = 'none'
+    renderList(tasks)
+  } catch (error) {
+    console.log('Error', error)
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => getRemoteTasks())
 
 addBtn.addEventListener('click', () => addTask(input.value))
 
