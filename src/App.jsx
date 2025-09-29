@@ -1,14 +1,19 @@
 import './App.css'
+import TodoList from './components/TodoList'
+import Container from './components/Container'
 import dummyTasks from './data/dummyTasks'
-import TodoList from './TodoList'
 
 function App() {
 
 
   return (
-    <div className="container">
-     <TodoList tasks={dummyTasks} />
-    </div>
+    
+      <Container>
+        <TodoList tasks={dummyTasks} />
+      </Container>
+
+     
+    
   )
 }
 
