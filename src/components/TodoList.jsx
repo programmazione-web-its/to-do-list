@@ -1,50 +1,52 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import TodoItem from "./TodoItem";
-import Button from "./Button";
-import { PlusIcon } from "@phosphor-icons/react";
+import TodoItem from './TodoItem'
+import Button from './Button'
+import { PlusIcon } from '@phosphor-icons/react'
 
 function TodoList({ tasks }) {
- const [index, setIndex] = useState(0)
- const [tasksArray,setTasksArray] = useState(tasks)
+  const [index, setIndex] = useState(0)
+  const tasksDone = tasks.filter((task) => task.status === 'done')
+  const tasksToDo = tasks.filter((task) => task.status !== 'done')
+  const tasksFormatted = [tasksToDo, tasksDone]
+  const [tasksArray, setTasksArray] = useState(tasksFormatted)
 
-    function handleClick(i) {
-        console.log("Sto cliccando a inidice " +  i)
-        setIndex(i)
-       
+  function handleClick(i) {
+    console.log('Sto cliccando a inidice ' + i)
+    setIndex(i)
+  }
 
-    }
+  // const tasksDone = tasks.filter(task => task.status === 'done')
+  // const tasksToDo = tasks.filter(task => task.status !== 'done')
+  // const tasksArray = [tasksDone, tasksToDo]
 
-    // const tasksDone = tasks.filter(task => task.status === 'done')
-    // const tasksToDo = tasks.filter(task => task.status !== 'done')
-    // const tasksArray = [tasksDone, tasksToDo]
+  function handleAddTask() {
+    setTasksArray((prevTaskArray) => [
+      ...prevTaskArray,
+      {
+        id: new Date(),
+        text: 'Sono una nuova task',
+        status: 'pending',
+      },
+    ])
 
-    function handleAddTask() {
-        setTasksArray((prevTaskArray) => [...prevTaskArray,{
-            id: new Date(),
-            text: 'Sono una nuova task',
-            status: 'pending'
-     } ])
+    console.log('Add new task')
+  }
 
-        console.log("Add new task")
-    }
-
-    return (
-        <>
-        <div className="flex items-center gap-2">
-             <Button onBtnClick={()=> handleClick(0)}>Completate</Button>
-             <Button onBtnClick={()=> handleClick(1)}>Da fare</Button>
-        </div>
-            <ul>
-                {
-                   tasksArray.map(task => <TodoItem key={task.id} task={task} />)
-                }
-  
-              
-            </ul>
-           <Button onBtnClick={handleAddTask}>Aggiungi una nuova task</Button>
-        </>
-    )
+  return (
+    <>
+      <div className='flex items-center gap-2'>
+        <Button onBtnClick={() => handleClick(0)}>Da fare</Button>
+        <Button onBtnClick={() => handleClick(1)}>Completate</Button>
+      </div>
+      <ul>
+        {tasksArray[index].map((task) => (
+          <TodoItem key={task.id} task={task} />
+        ))}
+      </ul>
+      <Button onBtnClick={handleAddTask}>Aggiungi una nuova task</Button>
+    </>
+  )
 }
 
 export default TodoList
