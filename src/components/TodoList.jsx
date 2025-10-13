@@ -1,46 +1,42 @@
 import { useState } from 'react'
 
-import TodoItem from './TodoItem'
 import Button from './Button'
-import { PlusIcon } from '@phosphor-icons/react'
+import TodoItem from './TodoItem'
 
 function TodoList({ tasks }) {
-  const [index, setIndex] = useState(0)
-  const tasksDone = tasks.filter((task) => task.status === 'done')
-  const tasksToDo = tasks.filter((task) => task.status !== 'done')
-  const tasksFormatted = [tasksToDo, tasksDone]
-  const [tasksArray, setTasksArray] = useState(tasksFormatted)
+  const [allTasks, setAllTasks] = useState(tasks)
 
-  function handleClick(i) {
-    console.log('Sto cliccando a inidice ' + i)
-    setIndex(i)
+  const [status, setStatus] = useState()
+
+  function handleClick(status) {
+    setStatus(status)
   }
 
-  // const tasksDone = tasks.filter(task => task.status === 'done')
-  // const tasksToDo = tasks.filter(task => task.status !== 'done')
-  // const tasksArray = [tasksDone, tasksToDo]
-
   function handleAddTask() {
-    setTasksArray((prevTaskArray) => [
-      ...prevTaskArray,
+    setAllTasks((prevTasks) => [
+      ...prevTasks,
       {
-        id: new Date(),
-        text: 'Sono una nuova task',
+        id: Date.now(),
+        text: 'Sono una task nuova!',
         status: 'pending',
       },
     ])
-
-    console.log('Add new task')
   }
+
+  const tasksChooser = status
+    ? allTasks.filter((task) =>
+        status === 'done' ? task.status === 'done' : task.status !== 'done'
+      )
+    : allTasks
 
   return (
     <>
       <div className='flex items-center gap-2'>
-        <Button onBtnClick={() => handleClick(0)}>Da fare</Button>
-        <Button onBtnClick={() => handleClick(1)}>Completate</Button>
+        <Button onBtnClick={() => handleClick('pending')}>Da fare</Button>
+        <Button onBtnClick={() => handleClick('done')}>Completate</Button>
       </div>
       <ul>
-        {tasksArray[index].map((task) => (
+        {tasksChooser.map((task) => (
           <TodoItem key={task.id} task={task} />
         ))}
       </ul>

@@ -4,16 +4,10 @@ import Container from './components/Container'
 import dummyTasks from './data/dummyTasks'
 
 function App() {
-
-
   return (
-    
-      <Container>
-        <TodoList tasks={dummyTasks} />
-      </Container>
-
-     
-    
+    <Container>
+      <TodoList tasks={dummyTasks} />
+    </Container>
   )
 }
 
