@@ -19,8 +19,16 @@ function TodoList({ tasks }) {
         id: Date.now(),
         text: 'Sono una task nuova!',
         status: 'pending',
+        editable: true,
       },
     ])
+  }
+
+  function handleChange(e, id) {
+    const updatedTasks = allTasks.map((task) =>
+      task.id === id ? { ...task, text: e.target.value, editable: false } : task
+    )
+    setAllTasks(updatedTasks)
   }
 
   const tasksChooser = status
@@ -37,7 +45,11 @@ function TodoList({ tasks }) {
       </div>
       <ul>
         {tasksChooser.map((task) => (
-          <TodoItem key={task.id} task={task} />
+          <TodoItem
+            key={task.id}
+            task={task}
+            handleChange={(e) => handleChange(e, task.id)}
+          />
         ))}
       </ul>
       <Button onBtnClick={handleAddTask}>Aggiungi una nuova task</Button>
