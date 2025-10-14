@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { PlusIcon, ArrowClockwiseIcon } from '@phosphor-icons/react'
 
 import Button from './Button'
 import TodoItem from './TodoItem'
+import Stats from './Stats'
 
 function TodoList({ tasks }) {
   const [allTasks, setAllTasks] = useState(tasks)
@@ -25,10 +27,19 @@ function TodoList({ tasks }) {
   }
 
   function handleChange(e, id) {
-    const updatedTasks = allTasks.map((task) =>
-      task.id === id ? { ...task, text: e.target.value, editable: false } : task
+    // const updatedTasks = allTasks.map((task) =>
+    //   task.id === id ? { ...task, text: e.target.value, editable: false } : task
+    // )
+    // setAllTasks(updatedTasks)
+
+    /* Forma migliorata 👇 */
+    setAllTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id
+          ? { ...task, text: e.target.value, editable: false }
+          : task
+      )
     )
-    setAllTasks(updatedTasks)
   }
 
   const tasksChooser = status
@@ -40,8 +51,21 @@ function TodoList({ tasks }) {
   return (
     <>
       <div className='flex items-center gap-2'>
-        <Button onBtnClick={() => handleClick('pending')}>Da fare</Button>
-        <Button onBtnClick={() => handleClick('done')}>Completate</Button>
+        <Button type='secondary' onBtnClick={() => handleClick('pending')}>
+          Da fare
+        </Button>
+        <Button type='secondary' onBtnClick={() => handleClick('done')}>
+          Completate
+        </Button>
+        {/* Il pulsante mostra tutte deve comparire solo quando i filtri sono attivi */}
+        <Button
+          type='light'
+          className='flex items-center justify-content gap-2 ml-auto'
+        >
+          <ArrowClockwiseIcon size={18} />
+          Mostra tutte
+        </Button>
+        <Stats />
       </div>
       <ul>
         {tasksChooser.map((task) => (
@@ -52,7 +76,13 @@ function TodoList({ tasks }) {
           />
         ))}
       </ul>
-      <Button onBtnClick={handleAddTask}>Aggiungi una nuova task</Button>
+      <Button
+        onBtnClick={handleAddTask}
+        className='flex items-center justify-content gap-2 mx-auto mt-9'
+      >
+        <PlusIcon size={18} />
+        Aggiungi task
+      </Button>
     </>
   )
 }

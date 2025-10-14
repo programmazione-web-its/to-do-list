@@ -1,4 +1,12 @@
 import { useState } from 'react'
+
+import {
+  PenIcon,
+  TrashIcon,
+  CheckCircleIcon,
+  FloppyDiskBackIcon,
+} from '@phosphor-icons/react'
+
 function TodoItem({ task, handleChange, ...props }) {
   const { id, text, status, editable } = task
   const [isEditable, setIsEditable] = useState(editable)
@@ -35,12 +43,24 @@ function TodoItem({ task, handleChange, ...props }) {
           {text}
         </>
       )}
-      <span
-        onClick={() => setIsEditable(!isEditable)}
-        className='ml-auto inline-block text-sx bg-cyan-900 text-white cursor-pointer'
-      >
-        {isEditable ? 'Salva' : 'Modifica'}
-      </span>
+      <div className='flex items-center ml-auto gap-2'>
+        <span className='ml-auto inline-block  cursor-pointer'>
+          {/* Deve vedersi solo se non è completata la task */}
+          <CheckCircleIcon size={22} />
+        </span>
+        <span
+          onClick={() => setIsEditable(!isEditable)}
+          className='ml-auto inline-block  cursor-pointer'
+        >
+          {/* Se la task è completata, non può più essere modificabile */}
+          {isEditable ? (
+            <FloppyDiskBackIcon size={22} />
+          ) : (
+            <PenIcon size={22} />
+          )}
+        </span>
+        <TrashIcon size={22} />
+      </div>
     </li>
   )
 }
