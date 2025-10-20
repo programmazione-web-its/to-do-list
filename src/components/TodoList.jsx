@@ -40,13 +40,26 @@ function TodoList({ tasks }) {
           : task
       )
     )
+
+
+  }
+
+  function handleDeleteTask(id) {
+    setAllTasks((prevTasks) => prevTasks.filter((task) => task.id !== id))
+  }
+
+  function handleStatusChange(id) {
+    setAllTasks((prevTasks) => prevTasks.map((task) => task.id === id ? { ...task, status: 'done'}: task))
   }
 
   const tasksChooser = status
     ? allTasks.filter((task) =>
-        status === 'done' ? task.status === 'done' : task.status !== 'done'
-      )
+      status === 'done' ? task.status === 'done' : task.status !== 'done'
+    )
     : allTasks
+
+  const tasksCompleted = allTasks.filter((task) => task.status === 'done')
+  const tasksToDo = allTasks.filter((task) => task.status !== 'done')
 
   return (
     <>
@@ -58,14 +71,24 @@ function TodoList({ tasks }) {
           Completate
         </Button>
         {/* Il pulsante mostra tutte deve comparire solo quando i filtri sono attivi */}
-        <Button
-          type='light'
-          className='flex items-center justify-content gap-2 ml-auto'
-        >
-          <ArrowClockwiseIcon size={18} />
-          Mostra tutte
-        </Button>
-        <Stats />
+        {
+          status === 'done' || status === 'pending' ? (
+            <Button
+              type='light'
+              className='flex items-center justify-content gap-2 ml-auto'
+              onBtnClick={() => handleClick('')}
+            >
+              <ArrowClockwiseIcon size={18} />
+              Mostra tutte
+            </Button>
+          ) : null
+        }
+
+        <Stats 
+          className="ml-auto"
+          completed={tasksCompleted.length} 
+          toDo={allTasks.length - tasksCompleted.length} 
+        />
       </div>
       <ul>
         {tasksChooser.map((task) => (
@@ -73,6 +96,8 @@ function TodoList({ tasks }) {
             key={task.id}
             task={task}
             handleChange={(e) => handleChange(e, task.id)}
+            handleDeleteTask={() => handleDeleteTask(task.id)}
+            handleStatusChange={() => handleStatusChange(task.id)}
           />
         ))}
       </ul>
