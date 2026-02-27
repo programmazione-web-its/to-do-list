@@ -1,12 +1,10 @@
 
 
-function HelloWorld({user, message, text = 'Testo di default'}) {
+function HelloWorld({children}) {
 
   return (
-    <div>
-      <h1>Ciao {user}!</h1>
-      <p>{message}</p>
-      <p>{text}</p>
+    <div className="container hello-world w-large">
+     {children}
     </div>
   );
 }
