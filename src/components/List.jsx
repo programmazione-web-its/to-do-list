@@ -1,30 +1,28 @@
-import pencilIcon from "../assets/pencil.svg";
-import trashIcon from "../assets/trash.svg";
+import pencilIcon from '../assets/pencil.svg'
+import trashIcon from '../assets/trash.svg'
 
 function List({ listElements }) {
-  const iconStyle = {
-    backgroundColor: "#f6f6f6",
-    color: "red",
-    width: 20,
-    padding: "1rem",
-    borderRadius: "100%",
-  };
-
   function handleClick(pulsante) {
-    console.log("Click sul pulsante ", pulsante)
+    console.log('Click sul pulsante ', pulsante)
   }
 
   return (
-    <ul className="list">
+    <ul className='list'>
       {listElements.map((element, i) => (
-        <li className={`list-item ${i === 2 ? 'bg-red': 'bg-green'}`} key={i}>
+        <li className='list-item ' key={i}>
           {element}
-          <img onClick={()=>handleClick(element)} style={iconStyle} src={pencilIcon} />
-          <img style={iconStyle} src={trashIcon} />
+          <div className='actions'>
+            <div onClick={() => handleClick(element)} className='icon-btn'>
+              <img src={pencilIcon} alt='edit' />
+            </div>
+            <div className='icon-btn'>
+              <img src={trashIcon} alt='delete' />
+            </div>
+          </div>
         </li>
       ))}
     </ul>
-  );
+  )
 }
 
-export default List;
+export default List
