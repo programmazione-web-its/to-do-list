@@ -89,7 +89,9 @@ header h1 {
   font-weight: 500;
   background-color: var(--item-bg);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
   border-left: 4px solid var(--primary-dark);
 }
 
@@ -98,8 +100,7 @@ header h1 {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
-.list-item span,
-.list-item > *:first-child {
+.list-item > *:nth-child(2) {
   flex: 1;
 }
 
@@ -122,7 +123,9 @@ header h1 {
   height: 22px;
   object-fit: contain;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
   flex-shrink: 0;
   flex-grow: 0;
 }
@@ -166,8 +169,12 @@ header h1 {
   border: 2px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease,
-    border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
   user-select: none;
 }
 
@@ -201,21 +208,6 @@ header h1 {
   outline-offset: 3px;
 }
 
-.completed-tasks {
-  padding: 20px 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  gap: 24px;
-}
-
-.completed-tasks > div > span {
-  display: block;
-  font-size: 2.4rem;
-  font-weight: 600;
-  color: var(--primary);
-}
-
 /* ===== SECONDARY ===== */
 .btn-secondary {
   background-color: transparent;
@@ -233,6 +225,40 @@ header h1 {
 .btn-secondary:focus-visible {
   outline: 3px solid var(--primary-focus);
   outline-offset: 3px;
+}
+
+/* ===== Tasks status ===== */
+
+.completed-tasks {
+  padding: 20px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.completed-tasks > div > span {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.status-dot {
+  display: inline-block;
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.status-dot.pending {
+  background-color: #d1d5dc;
+}
+.status-dot.done {
+  background-color: var(--green-border);
 }
 
 /* ===== RESPONSIVE — Tablet ===== */

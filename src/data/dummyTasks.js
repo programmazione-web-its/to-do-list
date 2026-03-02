@@ -8,6 +8,7 @@ export const dummyTasks = [
 ]
 
 export const doneTasks = dummyTasks.filter((task) => task.status === 'done')
+console.log('DONE TASKS', doneTasks)
 export const pendingTasks = dummyTasks.filter(
   (task) => task.status === 'pending',
 )
