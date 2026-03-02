@@ -201,6 +201,21 @@ header h1 {
   outline-offset: 3px;
 }
 
+.completed-tasks {
+  padding: 20px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.completed-tasks > div > span {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
 /* ===== SECONDARY ===== */
 .btn-secondary {
   background-color: transparent;
