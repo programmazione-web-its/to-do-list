@@ -16,11 +16,11 @@ import { dummyTasks, doneTasks, pendingTasks } from './data/dummyTasks'
 // function showPending() {
 //   console.log('Task da completare')
 // }
-console.log('DONE TASKS', doneTasks)
-console.log('PENDING TASKS', pendingTasks)
+
 function App() {
   // const [status, setStatus] = useState()
   const [tasks, setTasks] = useState(dummyTasks)
+  const [newTask, setNewTask] = useState('Nuova task')
 
   function showStatus(status) {
     // setStatus(status)
@@ -32,6 +32,20 @@ function App() {
     } else {
       setTasks(dummyTasks)
     }
+  }
+
+  function handleChange(e) {
+    setNewTask(e.target.value)
+  }
+
+  function addNewTask() {
+    const newTaskObj = {
+      id: Date.now(),
+      text: newTask,
+      status: 'pending',
+    }
+
+    setTasks((prevTasks) => [...prevTasks, newTaskObj])
   }
 
   return (
@@ -67,6 +81,21 @@ function App() {
         ) : (
           <List listElements={pendingTasks} />
         )} */}
+        <div>
+          <input
+            id='new-task'
+            name='new-task'
+            value={newTask}
+            onChange={handleChange}
+            placeholder='Inizia a scrivere'
+            className='input'
+          />
+          <Button
+            handleClick={addNewTask}
+            title='Aggiungi una nuova task'
+            classes='btn-primary'
+          />
+        </div>
       </Container>
     </div>
   )
