@@ -4,34 +4,14 @@ import pencilIcon from '../assets/pencil.svg'
 import trashIcon from '../assets/trash.svg'
 import checkIcon from '../assets/check-circle.svg'
 
-function List({ listElements }) {
+function List({ listElements, handleClick }) {
   // let completed = 0
   // let pending = 10
-  const [completed, setCompleted] = useState(0)
-  const [pending, setPending] = useState(10)
-  function handleClick(pulsante) {
-    console.log('Click sul pulsante ', pulsante)
-  }
 
-  function updateCompleted() {
-    setCompleted((prev) => prev + 1) // versione più giusta
-    // setCompleted(completed + 1)
-    setPending((prev) => prev - 1)
-    console.log('completed count', completed)
-  }
+  function updateCompleted() {}
 
   return (
     <>
-      <div className='completed-tasks'>
-        <div>
-          <span>{completed}</span>
-          completate
-        </div>
-        <div>
-          <span>{pending}</span>
-          da completare
-        </div>
-      </div>
       <ul className='list'>
         {listElements.map((element) => (
           <li
@@ -46,7 +26,10 @@ function List({ listElements }) {
                   <img src={checkIcon} alt='done' />
                 </div>
               ) : (
-                <div onClick={() => handleClick(element)} className='icon-btn'>
+                <div
+                  onClick={() => handleClick(element.id)}
+                  className='icon-btn'
+                >
                   <img src={pencilIcon} alt='edit' />
                 </div>
               )}

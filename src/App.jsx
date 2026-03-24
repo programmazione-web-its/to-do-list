@@ -2,25 +2,55 @@ import { useState } from 'react'
 
 import logo from './assets/logo.png'
 
-import List from './components/List'
-import HelloWorld from './components/HelloWorld'
 import Button from './components/Button'
 import Container from './components/Container'
+import List from './components/List'
+import CounterStats from './components/CounterStats'
 
-import { dummyTasks, doneTasks, pendingTasks } from './data/dummyTasks'
+import { dummyTasks } from './data/dummyTasks'
 
-// function showCompleted() {
-//   console.log('Task completate')
-// }
+function countCompleted(items) {
+  let tasks = []
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].status === 'done') {
+      tasks.push(items[i])
+    }
+  }
+  return tasks
+}
 
-// function showPending() {
-//   console.log('Task da completare')
-// }
+function countPending(items) {
+  let tasks = []
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].status === 'pending') {
+      tasks.push(items[i])
+    }
+  }
+  return tasks
+}
+
+function updateList(items, elementId) {
+  let tasks = []
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].id === elementId) {
+      items[i].status = 'done'
+      tasks.push(items[i])
+    } else {
+      tasks.push(items[i])
+    }
+  }
+
+  console.log('Updated lists', tasks)
+
+  return tasks
+}
 
 function App() {
   // const [status, setStatus] = useState()
   const [tasks, setTasks] = useState(dummyTasks)
   const [newTask, setNewTask] = useState('Nuova task')
+  const doneTasks = countCompleted(tasks)
+  const pendingTasks = countPending(tasks)
 
   function showStatus(status) {
     // setStatus(status)
@@ -48,6 +78,12 @@ function App() {
     setTasks((prevTasks) => [...prevTasks, newTaskObj])
   }
 
+  function changeTaskStatus(e) {
+    console.log('Click singola funzione', e)
+    const updatedTask = updateList(tasks, e)
+    setTasks(updatedTask)
+  }
+
   return (
     <div>
       <header>
@@ -58,29 +94,28 @@ function App() {
       </header>
 
       <Container>
-        <div className='filter'>
-          <Button
-            title='Completate'
-            classes='btn-primary'
-            handleClick={() => showStatus('done')}
-          />
-          <Button
-            title='Da completare'
-            classes='btn-secondary'
-            handleClick={() => showStatus('pending')}
-          />
-          <Button
-            title='Tutte'
-            classes='btn-secondary'
-            handleClick={() => showStatus('')}
-          />
+        <div>
+          <div className='filter'>
+            <Button
+              title='Completate'
+              classes='btn-primary'
+              handleClick={() => showStatus('done')}
+            />
+            <Button
+              title='Da completare'
+              classes='btn-secondary'
+              handleClick={() => showStatus('pending')}
+            />
+            <Button
+              title='Tutte'
+              classes='btn-secondary'
+              handleClick={() => showStatus('')}
+            />
+          </div>
+          <CounterStats done={doneTasks.length} pending={pendingTasks.length} />
         </div>
-        <List listElements={tasks} />
-        {/* {status === 'done' ? (
-          <List listElements={doneTasks} />
-        ) : (
-          <List listElements={pendingTasks} />
-        )} */}
+        <List listElements={tasks} handleClick={changeTaskStatus} />
+
         <div>
           <input
             id='new-task'
